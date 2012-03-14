@@ -55,11 +55,9 @@ def get_current_datetime_object():
 	return datetime.datetime.now()
 
 def get_number_of_days_until_the_deadline(limit_date, current_date):
+	if isinstance(limit_date, datetime.datetime) == False and isinstance(current_date, datetime.datetime):
+		raise ValueError("limit date or currennt date is not datetime object")
+	
 	diff = limit_date - current_date
-	#monthes = diff/31
-	#years = 0
-	#if monthes >= 12:
-	#	years = monthes/
-	#days = diff - (diff*monthes)
-	return diff.days()
+	return diff.days+1
 
