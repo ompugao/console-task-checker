@@ -61,3 +61,38 @@ def get_number_of_days_until_the_deadline(limit_date, current_date):
 	diff = limit_date - current_date
 	return diff.days+1
 
+def get_sorted_items(task_container):
+	current_date = get_current_datetime_object()
+	# tasklist data struct : {"1" : [(strformat, taskcontents, colorcode)]}
+	task_contents_list = {}
+	for limit_date, task_contents in task_container.iteritems():
+		days_until_the_deadline = get_number_of_days_until_the_deadline(limit_date, current_date)
+		strformat = limit_date.strftime("%Y/%m/%d")
+
+		# set color code
+		colorcode = "white"
+		if days_until_the_deadline <= 0:
+			colorcode = "red"
+		elif days_until_the_deadline <= 3:
+			colorcode = "magenta"
+		elif days_until_the_deadline <= 7:
+			colorcode = "cyan"
+		elif days_until_the_deadline <= 31:
+			colorcode = "green"
+		
+		if days_until_the_deadline in task_contents_list.keys():
+			task_contents_list[days_until_the_deadline].append((
+				strformat,
+				task_contents,
+				colorcode
+			))
+
+		else:
+			task_contents_list[days_until_the_deadline] = []
+			task_contents_list[days_until_the_deadline].append((
+				strformat,
+				task_contents,
+				colorcode
+			))
+
+	return task_contents_list

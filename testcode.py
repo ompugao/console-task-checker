@@ -10,13 +10,16 @@ class Test_TaskChecker(unittest.TestCase):
 		pass
 
 	def test_add_function(self):
-		#os.system("rm ~/.task_conteiner")
 		os.system("python taskcheck.py --add 2012/03/20 確定申告")
-		fp = open(os.path.expanduser("~/.task_conteiner"))
-		loads = pickle.load(fp)
+		os.system("python taskcheck.py --add 2012/03/30 テストテスト")
+		os.system("python taskcheck.py --add 2013/01/01 元旦")
+		os.system("python taskcheck.py --add 2012/03/15 テスト")
 
 	def test_show_tasklist(self):
+		print "="*50
 		os.system("python taskcheck.py --show")
+
+
 
 
 

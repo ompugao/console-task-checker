@@ -51,30 +51,27 @@ def show_tasks_list(arguments):
 		print "There is no TASKS!"
 		kill(1)
 
-	current_date = common.get_current_datetime_object()
 	if len(arguments) == 0:
 		# Date is not specified
 		width = sorted([len(i) for i in task_container.values()])[-1]
-		task_contents_list = []
-		for limit_date, task_contents in task_container.iteritems():
-			days_until_the_deadline = common.get_number_of_days_until_the_deadline(limit_date, current_date)
-			strformat = limit_date.strftime("%Y/%m/%d")
-			colorcode = "white"
-			if days_until_the_deadline <= 3:
-				colorcode = "red"
-			elif days_until_the_deadline <= 7:
-				colorcode = "cyan"
-			elif days_until_the_deadline <= 31:
-				colorcode= "green"
-
-			task_contents_list.append()
-
-			print "%s : %s : %s" % (
-				termcolor.colored(strformat, colorcode),
-				"期限まであと%s日" % termcolor.colored(days_until_the_deadline, colorcode),
-				task_contents)
-		pass
-
+		sorted_tasks = common.get_sorted_items(task_container)
+		deadlines = sorted(sorted_tasks.keys())
+		for deadline in deadlines:
+			for task_info in sorted_tasks[deadline]:
+				strformat_date, contents, colorcode = task_info
+				if deadline == 0:
+					print termcolor.colored(
+							"%s : 今日が期限です!: %s" % (
+								strformat_date, contents
+							), colorcode
+					)
+				else:
+					print termcolor.colored(
+							"%s : 期限まであと %s 日: %s" % (
+								strformat_date, deadline, contents
+							), colorcode
+					)
+		
 if __name__ == "__main__":
 	try:
 		option = sys.argv[1]
