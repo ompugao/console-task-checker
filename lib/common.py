@@ -32,7 +32,7 @@ def help_msg():
 	print "      in addition, if you input month format, you can show task list for that month."
 	print "      Date Format : YYYY/MM/DD or YYYY/MM"
 	
-def raise_not_along_format_error():
+def raise_not_along_format_error(dateformat):
 	print "'%s' is not along the format." % dateformat
 	print "Date Format : YYYY/MM/DD"
 	kill(1)
@@ -42,8 +42,19 @@ def check_format(dateformat):
 		dateformat = dateformat[:-1]
 	
 	clip = dateformat.split("/")
+	for i in clip:
+		result = 0
+		try:
+			j = int(i)
+			result = True
+		except:
+			result = False
+	if result == False:
+		print "'%s' does not contain an integer" % dateformat
+		kill(1)
+
 	if len(clip) == 1:
-		raise_not_along_format_error()
+		raise_not_along_format_error(dateformat)
 	else:
 		return dateformat
 
@@ -56,7 +67,11 @@ def format_convert(dateformat):
 		print "'%s' does not contain an integer" % dateformat
 		kill(1)
 
-	target_date = datetime.datetime(year, month, day)
+	try:
+		target_date = datetime.datetime(year, month, day)
+	except ValueError:
+		print "day is out of range for year or month or day"
+		kill(1)
 	return target_date
 
 
@@ -104,15 +119,22 @@ def get_task_iter_on_date(dateformat, task_container):
 	elif len(clip) == 3:
 		cep = 3
 	else:
-		raise_not_along_format_error()
+		raise_not_along_format_error(dateformat)
 
 	result = {}
+	dont_exist_task = []
 	for limit_date, task_contents in task_container.iteritems():
 		string_date = get_string_date(limit_date, cep)
 		if string_date == dateformat:
 			result[limit_date] = task_contents
+			dont_exist_task.append(True)
+		
 		else:
-			continue
+			dont_exist_task.append(False)
+	
+	if True not in dont_exist_task:
+		print "There is no TASKS on %s !" % dateformat
+		kill(1)
 
 	return result.iteritems()
 
