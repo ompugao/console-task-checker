@@ -6,7 +6,7 @@ import sys
 import cPickle as pickle
 import datetime
 
-container_file = os.environ["HOME"]+"/.task_conteiner"
+container_file = os.environ["HOME"]+"/.task_container"
 kill = sys.exit
 
 class TaskContainer(dict):
@@ -31,6 +31,34 @@ def help_msg():
 	print "      Show task list. If you input date format to second argument, you can show task list for that date."
 	print "      in addition, if you input month format, you can show task list for that month."
 	print "      Date Format : YYYY/MM/DD or YYYY/MM"
+	
+def raise_not_along_format_error():
+	print "'%s' is not along the format." % dateformat
+	print "Date Format : YYYY/MM/DD"
+	kill(1)
+
+def check_format(dateformat):
+	if dateformat.endswith("/"):
+		dateformat = dateformat[:-1]
+	
+	clip = dateformat.split("/")
+	if len(clip) == 1:
+		raise_not_along_format_error()
+	else:
+		return dateformat
+
+def format_convert(dateformat):
+	dateformat = check_format(dateformat)
+	clip = dateformat.split("/")
+	try:
+		year, month, day = [int(i) for i in clip]
+	except ValueError:
+		print "'%s' does not contain an integer" % dateformat
+		kill(1)
+
+	target_date = datetime.datetime(year, month, day)
+	return target_date
+
 
 def check_file_existence():
 	if os.access(container_file, os.F_OK):
@@ -61,18 +89,54 @@ def get_number_of_days_until_the_deadline(limit_date, current_date):
 	diff = limit_date - current_date
 	return diff.days+1
 
-def get_sorted_items(task_container):
+def get_string_date(dateobject, cep):
+	if cep == 2:
+		return dateobject.strftime("%Y/%m")
+	elif cep == 3:
+		return dateobject.strftime("%Y/%m/%d")
+
+
+def get_task_iter_on_date(dateformat, task_container):
+	clip = dateformat.split("/")
+	cep = 0
+	if len(clip) == 2:
+		cep = 2
+	elif len(clip) == 3:
+		cep = 3
+	else:
+		raise_not_along_format_error()
+
+	result = {}
+	for limit_date, task_contents in task_container.iteritems():
+		string_date = get_string_date(limit_date, cep)
+		if string_date == dateformat:
+			result[limit_date] = task_contents
+		else:
+			continue
+
+	return result.iteritems()
+
+def get_sorted_items(task_container, dateformat=None):
+	if dateformat:
+		dateformat = check_format(dateformat)
+		task_container_iter = get_task_iter_on_date(dateformat, task_container)
+	else:
+		task_container_iter = task_container.iteritems()
+
 	current_date = get_current_datetime_object()
 	# tasklist data struct : {"1" : [(strformat, taskcontents, colorcode)]}
+
 	task_contents_list = {}
-	for limit_date, task_contents in task_container.iteritems():
+	for limit_date, task_contents in task_container_iter:
 		days_until_the_deadline = get_number_of_days_until_the_deadline(limit_date, current_date)
 		strformat = limit_date.strftime("%Y/%m/%d")
 
 		# set color code
 		colorcode = "white"
-		if days_until_the_deadline <= 0:
+		if days_until_the_deadline == 0:
 			colorcode = "red"
+		elif days_until_the_deadline < 0:
+			colorcode = "yellow"
 		elif days_until_the_deadline <= 3:
 			colorcode = "magenta"
 		elif days_until_the_deadline <= 7:

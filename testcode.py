@@ -4,6 +4,7 @@
 import unittest
 import cPickle as pickle
 import os
+import json
 
 class Test_TaskChecker(unittest.TestCase):
 	def setUp(self):
@@ -13,11 +14,22 @@ class Test_TaskChecker(unittest.TestCase):
 		os.system("python taskcheck.py --add 2012/03/20 確定申告")
 		os.system("python taskcheck.py --add 2012/03/30 テストテスト")
 		os.system("python taskcheck.py --add 2013/01/01 元旦")
-		os.system("python taskcheck.py --add 2012/03/15 テスト")
+		os.system("python taskcheck.py --add 2012/04/15 テスト")
 
 	def test_show_tasklist(self):
 		print "="*50
 		os.system("python taskcheck.py --show")
+
+	def test_show_tasklist_on_date(self):
+		print "="*50
+		os.system("python taskcheck.py --show 2012/04")
+		print "="*50
+		os.system("python taskcheck.py --show 2012/03/20")
+		print "="*50
+		
+	def test_show_list_length(self):
+		container = pickle.load(open(os.path.expanduser("~/.task_container")))
+		print container.length
 
 
 
