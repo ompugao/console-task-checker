@@ -20,3 +20,4 @@
 * 引数に日付のフォーマットを指定した場合、その日付のタスクを出力します。  
 * 日付のフォーマットは `YYYY/MM/` か `YYYY/MM/DD` です。  
 
+![showmode](https://img.skitch.com/20120318-bayfhndxu9bit8ikqthm6hxk97.png)
