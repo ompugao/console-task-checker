@@ -64,6 +64,32 @@ def show_tasks_list(arguments):
 						), colorcode
 				)
 		
+def delete_task(arguments):
+	if len(arguments) == 0:
+		# show task number
+		task_container = common.get_task_container()
+		if task_container.length == 0:
+			print "There is NO TASKS!!"
+			kill()
+
+		task_number = 0
+		for limit_date, task_contents in task_container.iteritems():
+			print "[%s] %s : %s " % (
+				termcolor.colored(task_number, "yellow"),
+				common.get_string_date(limit_date, 3),
+				task_contents,
+			)
+
+			task_number += 1
+
+	elif len(arguments) == 1:
+		try:
+			task_number = int(arguments[0])
+		except ValueError:
+			print "'%s' is not integer." % arguments[0]
+
+
+
 if __name__ == "__main__":
 	try:
 		option = sys.argv[1]
@@ -73,8 +99,11 @@ if __name__ == "__main__":
 		common.help_msg()
 		kill(1)
 
-	if option == "--add":
+	if option == "add":
 		add_new_task(args)
 		
-	elif option == "--show":
+	elif option == "show":
 		show_tasks_list(args)
+	
+	elif option == "delete":
+		delete_task(args)

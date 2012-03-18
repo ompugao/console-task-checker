@@ -23,14 +23,18 @@ class TaskContainer(dict):
 
 def help_msg():
 	print "ConsoleTaskChecker Version%s" % app_version
-	print "$ taskcheck.py [option] [Args]"
-	print "  --add [date] [task contents]"
+	print "$ task [option] [Args]"
+	print "  add [date] [task contents]"
 	print "      Add new task. Please input date format to second argument, and task contents to thirt argument."
 	print "      Date Format : YYYY/MM/DD"
-	print "  --show [[date]]"
+	print "  show [[date]]"
 	print "      Show task list. If you input date format to second argument, you can show task list for that date."
 	print "      in addition, if you input month format, you can show task list for that month."
 	print "      Date Format : YYYY/MM/DD or YYYY/MM"
+	print "  delete [[task number]]"
+	print "      Delete Task."
+	print "      If you run delete option without argument, This application provide task number to you."
+	print "      And you input delete option with task number to second argument. Then, this application delete task."  
 	
 def raise_not_along_format_error(dateformat):
 	print "'%s' is not along the format." % dateformat
@@ -151,7 +155,7 @@ def get_sorted_items(task_container, dateformat=None):
 	task_contents_list = {}
 	for limit_date, task_contents in task_container_iter:
 		days_until_the_deadline = get_number_of_days_until_the_deadline(limit_date, current_date)
-		strformat = limit_date.strftime("%Y/%m/%d")
+		strformat = get_string_date(limit_date, 3)
 
 		# set color code
 		colorcode = "white"
