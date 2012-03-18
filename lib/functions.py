@@ -24,10 +24,10 @@ class TaskContainer(dict):
 def help_msg():
 	print "ConsoleTaskChecker Version%s" % app_version
 	print "$ task [option] [Args]"
-	print "  add [date] [task contents]"
+	print "  create [date] [task contents]"
 	print "      Add new task. Please input date format to second argument, and task contents to thirt argument."
 	print "      Date Format : YYYY/MM/DD"
-	print "  show [[date]]"
+	print "  list [[date]]"
 	print "      Show task list. If you input date format to second argument, you can show task list for that date."
 	print "      in addition, if you input month format, you can show task list for that month."
 	print "      Date Format : YYYY/MM/DD or YYYY/MM"
