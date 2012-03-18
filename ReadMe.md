@@ -23,5 +23,5 @@
 ![showmode](https://img.skitch.com/20120318-bayfhndxu9bit8ikqthm6hxk97.png)
 
 
-***License
+# License
 MIT License  
