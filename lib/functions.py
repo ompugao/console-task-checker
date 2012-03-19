@@ -5,6 +5,7 @@ import os
 import sys
 import cPickle as pickle
 import datetime
+import hashlib
 
 container_file = os.environ["HOME"]+"/.task_container"
 kill = sys.exit
@@ -14,8 +15,8 @@ class TaskContainer(dict):
 		self.length = len(self.keys())
 		pass
 	
-	def add_task(self, datetime_object, task_content):
-		self[datetime_object] = task_content
+	def add_task(self, sha1_hash, datetime_object, task_content):
+		self[sha1_hash] = (datetime_object, task_content)
 		self.length = len(self.keys())
 	
 	def tasks(self):
@@ -77,6 +78,9 @@ def format_convert(dateformat):
 		print "day is out of range for year or month or day"
 		kill(1)
 	return target_date
+
+def create_sha1_hash(task_contents, datetime_object):
+	return hashlib.sha1(task_contents+datetime_object.strftime("%Y/%m/%d+%H:%M:%S")).hexdigest()
 
 
 def check_file_existence():

@@ -17,6 +17,10 @@ class Test_TaskChecker(unittest.TestCase):
 		os.system("python task.py create 2013/01/01 元旦")
 		os.system("python task.py create 2012/04/15 テスト")
 
+	def test_object(self):
+		tc = pickle.load(open(os.path.expanduser("~/.task_container")))
+		print tc
+
 #	def test_show_tasklist(self):
 #		print "="*50
 #		os.system("python task.py --show")
@@ -28,9 +32,9 @@ class Test_TaskChecker(unittest.TestCase):
 #		os.system("python task.py --show 2012/03/20")
 #		print "="*50
 		
-	def test_delete_task(self):
-		print "-"*100
-		os.system("python task.py delete 1")
+#	def test_delete_task(self):
+#		print "-"*100
+#		os.system("python task.py delete 1")
 
 	
 

@@ -8,9 +8,9 @@ import termcolor
 
 import lib
 from lib import kill
-lib.app_version = " 0.2"
+lib.app_version = " 2.0"
 
-def add_new_task(arguments):
+def create_task(arguments):
 	if len(arguments) <= 1:
 		print "argument is too short."
 		lib.help_msg()
@@ -19,7 +19,8 @@ def add_new_task(arguments):
 	limit_date = lib.format_convert(arguments[0])
 	task_contents = arguments[1]
 	task_container = lib.get_task_container()
-	task_container.add_task(limit_date, task_contents)
+	sha1_hash = lib.create_sha1_hash(task_contents, datetime.datetime.now())
+	task_container.add_task(sha1_hash, limit_date, task_contents)
 	lib.serialize_object(task_container)
 	print "Added the following task:"
 	print "%s : %s" % (arguments[0], arguments[1])
@@ -99,7 +100,7 @@ if __name__ == "__main__":
 		kill(1)
 
 	if option == "create":
-		add_new_task(args)
+		create_task(args)
 		
 	elif option == "list":
 		show_tasks_list(args)
