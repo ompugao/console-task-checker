@@ -42,10 +42,9 @@ def show_tasks_list(arguments):
 			strformat_date, contents, colorcode = task_info
 			if deadline == 0:
 				deadline = " "*(most_longest_width-int(len(str(deadline))))+str(deadline)
-				padding = 9+most_longest_width+2-len(u"今日が期限です!")
 				print termcolor.colored(
 						"%s : %s : %s" % (
-							strformat_date, "今日が期限です!"+(" "*padding), contents
+							strformat_date, "今日が期限です!"+(" "*most_longest_width), contents
 							
 						), colorcode
 				)
