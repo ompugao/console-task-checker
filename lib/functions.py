@@ -112,29 +112,38 @@ def get_number_of_days_until_the_deadline(limit_date, current_date):
 	diff = limit_date - current_date
 	return diff.days+1
 
-def get_string_date(dateobject, cep):
-	if cep == 2:
+def get_string_date(dateobject, sep):
+	if sep == 2:
 		return dateobject.strftime("%Y/%m")
-	elif cep == 3:
+	elif sep == 3:
 		return dateobject.strftime("%Y/%m/%d")
 
 
 def get_task_iter_on_date(dateformat, task_container):
 	clip = dateformat.split("/")
-	cep = 0
+
+	# if dateformat is 'YYYY/M' -> 'YYYY/0M'
+	for index in range(len(clip)):
+		if len(clip[index]) == 1:
+			clip[index] = "0"+clip[index]
+
+	dateformat = "/".join(clip)
+			
+	# to check whether the correct format and determine separater num
+	sep = 0
 	if len(clip) == 2:
-		cep = 2
+		sep = 2
 	elif len(clip) == 3:
-		cep = 3
+		sep = 3
 	else:
 		raise_not_along_format_error(dateformat)
 
 	result = {}
 	dont_exist_task = []
-	for limit_date, task_contents in task_container.iteritems():
-		string_date = get_string_date(limit_date, cep)
+	for hash, (limit_date, task_contents) in task_container.iteritems():
+		string_date = get_string_date(limit_date, sep)
 		if string_date == dateformat:
-			result[limit_date] = task_contents
+			result[hash] = (limit_date, task_contents)
 			dont_exist_task.append(True)
 		
 		else:
@@ -154,10 +163,13 @@ def get_sorted_items(task_container, dateformat=None):
 		task_container_iter = task_container.iteritems()
 
 	current_date = get_current_datetime_object()
-	# tasklist data struct : {"1" : [(strformat, taskcontents, colorcode)]}
-
 	task_contents_list = {}
-	for limit_date, task_contents in task_container_iter:
+
+	# original data : {hash: tuple(datetime obj, task contents)}
+	# tasklist data struct : {"1" : [(strformat, taskcontents, colorcode)]}
+	# return [sorted deadlines], [sorted task items]
+
+	for hash, (limit_date, task_contents) in task_container_iter:
 		days_until_the_deadline = get_number_of_days_until_the_deadline(limit_date, current_date)
 		strformat = get_string_date(limit_date, 3)
 
@@ -189,4 +201,4 @@ def get_sorted_items(task_container, dateformat=None):
 				colorcode
 			))
 
-	return task_contents_list
+	return sorted(task_contents_list.keys()), task_contents_list

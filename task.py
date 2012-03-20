@@ -32,21 +32,21 @@ def show_tasks_list(arguments):
 		kill(1)
 
 	if len(arguments) == 0:
-		# Date is not specified
-		sorted_tasks = lib.get_sorted_items(task_container)
+		deadlines, sorted_tasks = lib.get_sorted_items(task_container)
 	else:
-		sorted_tasks = lib.get_sorted_items(task_container, arguments[0])
+		deadlines, sorted_tasks = lib.get_sorted_items(task_container, arguments[0])
 
-	deadlines = sorted(sorted_tasks.keys())
 	most_longest_width = sorted([len(str(i)) for i in deadlines])[-1]
 	for deadline in deadlines:
 		for task_info in sorted_tasks[deadline]:
 			strformat_date, contents, colorcode = task_info
 			if deadline == 0:
 				deadline = " "*(most_longest_width-int(len(str(deadline))))+str(deadline)
+				padding = 9+most_longest_width+2-len(u"今日が期限です!")
 				print termcolor.colored(
-						"%s : 今日が期限です!: %s" % (
-							strformat_date, contents
+						"%s : %s : %s" % (
+							strformat_date, "今日が期限です!"+(" "*padding), contents
+							
 						), colorcode
 				)
 			elif deadline < 0:
