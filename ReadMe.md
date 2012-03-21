@@ -1,23 +1,25 @@
-Task Checker on Console Ver 0.1.3
+Task Checker on Console Ver 0.2.1
 ---
 
 # このアプリケーションについて
 このアプリケーションはコンソール上で**タスク管理**ができます。  
 
 # 使い方
-    $ taskcheck [option] [args]
+    $ task [option] [args]
 
 # オプション
-1. --add [日付のフォーマット] [タスクの中身]  
-2. --show [[日付のフォーマット]..]
+1. create [日付のフォーマット] [タスクの中身]  
+2. list [[日付のフォーマット]..]
+3. delete [[タスクの番号]..]
 
-(※)現在まだdeleteオプションを実装できてません  
+(※)Version 0.2.2にてオプション名の改変を行いました。  
 
-## add
+
+## create
 * 新しいタスクを追加します。  
 * 日付のフォーマットは`YYYY/MM/DD`です。  
 
-## show
+## list
 * 現在登録されているタスクのリストを出力します。  
 * 引数に何も指定しない場合は全てのタスクを出力します。  
 * 引数に日付のフォーマットを指定した場合、その日付のタスクを出力します。  
@@ -37,5 +39,23 @@ Task Checker on Console Ver 0.1.3
 ![showmode](https://img.skitch.com/20120318-bayfhndxu9bit8ikqthm6hxk97.png)
 
 
+## delete
+* タスクを削除します。
+* deleteオプションをつけて、第二引数に何も指定しない場合は、現在存在しているタスクの番号を出力します。
+
+![showmode](https://img.skitch.com/20120321-psbcf99krcbpq1kf3cn5mtcigw.png)
+
+* 第二引数にタスクの番号を指定すると、その番号のタスクがあるかチェックしたあと、その番号のタスクを削除します。
+
+
+
 # License
 MIT License  
+
+
+- - - 
+
+# Change Log
+### Version 0.2.2
+1. CRUD理論に則りオプション名を改変しました。
+2. タスクを削除する機能を作製
