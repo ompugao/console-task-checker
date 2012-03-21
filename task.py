@@ -71,7 +71,7 @@ def delete_task(arguments):
 			kill()
 
 		task_number = 0
-		for limit_date, task_contents in task_container.iteritems():
+		for hash, (limit_date, task_contents) in task_container.iteritems():
 			print "[%s] %s : %s " % (
 				termcolor.colored(task_number, "yellow"),
 				lib.get_string_date(limit_date, 3),
@@ -85,6 +85,19 @@ def delete_task(arguments):
 			task_number = int(arguments[0])
 		except ValueError:
 			print "'%s' is not integer." % arguments[0]
+
+		task_container = lib.get_task_container()
+
+		if task_number > task_container.length-1:
+			print "%s or more tasks do not have." % task_number
+			kill(1)
+		
+		delete = task_container.delete_task(task_container.keys()[task_number])
+		lib.serialize_object(task_container)
+		
+		print "Deleted Task :"
+		print "%s : %s" % (delete[0].strftime("%Y/%m/%d"), delete[1])
+
 
 
 
@@ -105,3 +118,6 @@ if __name__ == "__main__":
 	
 	elif option == "delete":
 		delete_task(args)
+
+	else:
+		lib.help_msg()

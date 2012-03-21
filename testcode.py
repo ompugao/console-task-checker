@@ -18,14 +18,16 @@ class Test_TaskChecker(unittest.TestCase):
 	#	os.system("python task.py create 2013/01/01 元旦")
 	#	os.system("python task.py create 2012/04/15 テスト")
 
-#	def test_object(self):
+	def test_object(self):
 		tc = pickle.load(open(os.path.expanduser("~/.task_container")))
 		print tc
 
 	def test_show_tasklist(self):
 		print "="*50
-		#os.system("python task.py list")
-		#task_container = pickle.load(open(os.path.expanduser("~/.task_container")))
+		os.system("python task.py list")
+		print "="*50
+		task_container = pickle.load(open(os.path.expanduser("~/.task_container")))
+		print task_container.length
 		#items =  lib.get_sorted_items(task_container)
 		#print items[0]
 		#print items[1]

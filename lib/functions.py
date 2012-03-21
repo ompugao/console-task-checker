@@ -19,6 +19,11 @@ class TaskContainer(dict):
 	def add_task(self, sha1_hash, datetime_object, task_content):
 		self[sha1_hash] = (datetime_object, task_content)
 		self.length = len(self.keys())
+
+	def delete_task(self, sha1_hash):
+		delete = self.pop(sha1_hash)
+		self.length = len(self.keys())
+		return delete
 	
 	def tasks(self):
 		return self.__dict__
