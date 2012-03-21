@@ -23,7 +23,8 @@ setup(
 	url = "",
 	download_url = "",
 	description = "this application support management your task on console.",
+	long_description = open("ReadMe.md").read()
 	py_modules = ['task', 'lib.functions', 'setup'],
-	packages = ['lib','lib.functions'],
+	packages = ['lib'],
 	scripts = ['bin/task']
 )
