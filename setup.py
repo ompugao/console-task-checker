@@ -2,9 +2,8 @@
 #coding: utf-8
 
 from distutils.core import setup
+from lib            import app_version
 import os
-
-app_version = "0.2.1"
 
 if os.path.isdir("bin") == False:
 	os.mkdir("bin")
