@@ -9,6 +9,7 @@ import hashlib
 
 container_file = os.environ["HOME"]+"/.task_container"
 kill = sys.exit
+app_version = "0.2.1"
 
 class TaskContainer(dict):
 	def __init__(self):
@@ -23,7 +24,7 @@ class TaskContainer(dict):
 		return self.__dict__
 
 def help_msg():
-	print "ConsoleTaskChecker Version%s" % app_version
+	print "ConsoleTaskChecker Version %s" % app_version
 	print "$ task [option] [Args]"
 	print "  create [date] [task contents]"
 	print "      Add new task. Please input date format to second argument, and task contents to thirt argument."
