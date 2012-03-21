@@ -5,7 +5,7 @@ Task Checker on Console Ver 0.2.1
 このアプリケーションはコンソール上で**タスク管理**ができます。  
 
 # 使い方
-    $ taskcheck [option] [args]
+    $ task [option] [args]
 
 # オプション
 1. create [日付のフォーマット] [タスクの中身]  
