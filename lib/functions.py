@@ -208,3 +208,7 @@ def get_sorted_items(task_container, dateformat=None):
 			))
 
 	return sorted(task_contents_list.keys()), task_contents_list
+
+def delete_all_tasks():
+	task_container = TaskContainer()
+	serialize_object(task_container)

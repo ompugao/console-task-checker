@@ -81,6 +81,24 @@ def delete_task(arguments):
 			task_number += 1
 
 	elif len(arguments) == 1:
+		if arguments[0] == "all":
+			check = raw_input("Are you sure to delete all task? (y/n) > ")
+			if check == "y" or check == "yes":
+				# delete all task
+
+				lib.delete_all_tasks()
+				print "Delete All Tasks."
+				kill(1)
+
+			elif check == "n" or check == "no":
+				# kill app
+				print "Stop delete mode."
+				kill(1)
+
+			else:
+				print "Please input 'y' or 'n'."
+				kill(1)
+
 		try:
 			task_number = int(arguments[0])
 		except ValueError:
