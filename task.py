@@ -26,9 +26,7 @@ def create_task(arguments):
 
 def show_tasks_list(arguments):
 	task_container = lib.get_task_container()
-	if task_container.length == 0:
-		print "There is no TASKS!"
-		kill(1)
+	lib.check_task_length(task_container)
 
 	if len(arguments) == 0:
 		deadlines, sorted_tasks = lib.get_sorted_items(task_container)
@@ -63,22 +61,12 @@ def show_tasks_list(arguments):
 				)
 		
 def delete_task(arguments):
+	task_container = lib.get_task_container()
 	if len(arguments) == 0:
 		# show task number
-		task_container = lib.get_task_container()
-		if task_container.length == 0:
-			print "There is NO TASKS!!"
-			kill()
-
-		task_number = 0
-		for hash, (limit_date, task_contents) in task_container.iteritems():
-			print "[%s] %s : %s " % (
-				termcolor.colored(task_number, "yellow"),
-				lib.get_string_date(limit_date, 3),
-				task_contents,
-			)
-
-			task_number += 1
+		lib.check_task_length(task_container)
+		lib.show_tasks_number(task_container)
+		
 
 	elif len(arguments) == 1:
 		if arguments[0] == "all":
@@ -104,8 +92,6 @@ def delete_task(arguments):
 		except ValueError:
 			print "'%s' is not integer." % arguments[0]
 
-		task_container = lib.get_task_container()
-
 		if task_number > task_container.length-1:
 			print "%s or more tasks do not have." % task_number
 			kill(1)
@@ -116,7 +102,41 @@ def delete_task(arguments):
 		print "Deleted Task :"
 		print "%s : %s" % (delete[0].strftime("%Y/%m/%d"), delete[1])
 
+	elif len(arguments) > 1:
+		print "arguments is too many."
+		lib.help_msg()
+		kill(1)
 
+
+def update_task(arguments):
+	task_container = lib.get_task_container()
+
+	if len(arguments) == 0:
+		lib.check_task_length(task_container)
+		lib.show_tasks_number(task_container)
+
+	elif len(arguments) == 3:
+		task_number, dateformat, task_contents = arguments
+		datetime_object = lib.format_convert(dateformat)
+		sha1_hash = task_container.keys()[int(task_number)]
+		print sha1_hash
+		task_container.update_task(sha1_hash, datetime_object, task_contents)
+		lib.serialize_object(task_container)
+		print "Updated Task:"
+		print "%s : %s" % (dateformat, task_contents)
+		
+
+	elif len(arguments) < 3:
+		print "arguments is too short."
+		lib.help_msg()
+		kill(1)
+
+	elif len(arguments) > 3:
+		print "arguments is too many."
+		lib.help_msg()
+		kill(1)
+
+			
 
 
 if __name__ == "__main__":
@@ -134,6 +154,9 @@ if __name__ == "__main__":
 	elif option == "list":
 		show_tasks_list(args)
 	
+	elif option == "update":
+		update_task(args)
+
 	elif option == "delete":
 		delete_task(args)
 

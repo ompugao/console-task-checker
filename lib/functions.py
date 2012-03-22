@@ -6,6 +6,7 @@ import sys
 import cPickle as pickle
 import datetime
 import hashlib
+import termcolor
 
 container_file = os.environ["HOME"]+"/.task_container"
 kill = sys.exit
@@ -16,14 +17,19 @@ class TaskContainer(dict):
 		self.length = len(self.keys())
 		pass
 	
-	def add_task(self, sha1_hash, datetime_object, task_content):
-		self[sha1_hash] = (datetime_object, task_content)
+	def add_task(self, sha1_hash, datetime_object, task_contents):
+		self[sha1_hash] = (datetime_object, task_contents)
 		self.length = len(self.keys())
 
 	def delete_task(self, sha1_hash):
 		delete = self.pop(sha1_hash)
 		self.length = len(self.keys())
 		return delete
+
+	def update_task(self, sha1_hash, datetime_object, task_contents):
+		self.delete_task(sha1_hash)
+		self.add_task(sha1_hash, datetime_object, task_contents)
+
 	
 	def tasks(self):
 		return self.__dict__
@@ -38,6 +44,12 @@ def help_msg():
 	print "      Show task list. If you input date format to second argument, you can show task list for that date."
 	print "      in addition, if you input month format, you can show task list for that month."
 	print "      Date Format : YYYY/MM/DD or YYYY/MM"
+	print "  update [[task number], [update dateformat], [updated task contents]]"
+	print "      Update Task."
+	print "      If you run update option wituout argument, This application provide task number to you."
+	print "      And, if you decided on the task that you want to update,  "
+	print "      please input task number at third argument, updated task date format at fourth argument"
+	print "      and updated task contents at fifth argument."
 	print "  delete [[task number]]"
 	print "      Delete Task."
 	print "      If you run delete option without argument, This application provide task number to you."
@@ -47,6 +59,11 @@ def raise_not_along_format_error(dateformat):
 	print "'%s' is not along the format." % dateformat
 	print "Date Format : YYYY/MM/DD"
 	kill(1)
+
+def check_task_length(task_container):
+	if task_container.length == 0:
+		print "There is NO TASKS!!"
+		kill()
 
 def check_format(dateformat):
 	if dateformat.endswith("/"):
@@ -208,6 +225,17 @@ def get_sorted_items(task_container, dateformat=None):
 			))
 
 	return sorted(task_contents_list.keys()), task_contents_list
+
+def show_tasks_number(task_container):
+	task_number = 0
+	for hash, (limit_date, task_contents) in task_container.iteritems():
+		print "[%s] %s : %s " % (
+			termcolor.colored(task_number, "yellow"),
+			get_string_date(limit_date, 3),
+			task_contents,
+		)
+
+		task_number += 1
 
 def delete_all_tasks():
 	task_container = TaskContainer()
