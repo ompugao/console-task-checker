@@ -10,7 +10,8 @@ Task Checker on Console Ver 0.2.3
 # オプション
 1. create [日付のフォーマット] [タスクの中身]  
 2. list [[日付のフォーマット]..]
-3. delete [[タスクの番号] or [all]..]
+3. update [[タスクの番号], [日付フォーマット], [タスクの中身]]
+4. delete [[タスクの番号] or [all]..]
 
 (※)Version 0.2.2にてオプション名の改変を行いました。  
 
@@ -36,20 +37,33 @@ Task Checker on Console Ver 0.2.3
 * 上記以外は全て`White`
 
 
-![showmode](https://img.skitch.com/20120318-bayfhndxu9bit8ikqthm6hxk97.png)
+![colorcode](https://img.skitch.com/20120318-bayfhndxu9bit8ikqthm6hxk97.png)
+
+
+## update
+* タスクをアップデートします。
+* updateオプションをつけて、第二引数に何も指定しない場合は、現在存在しているタスクの番号を出力します。
+
+![deletemode](https://img.skitch.com/20120321-psbcf99krcbpq1kf3cn5mtcigw.png)
+
+* 第二引数、第三引数、第四引数にそれぞれタスクの番号、変更後の日付のフォーマット、変更後のタスクの中身を指定すると、
+* 指定したタスクのアップデート（変更）ができます。
 
 
 ## delete
 * タスクを削除します。
 * deleteオプションをつけて、第二引数に何も指定しない場合は、現在存在しているタスクの番号を出力します。
-
-![showmode](https://img.skitch.com/20120321-psbcf99krcbpq1kf3cn5mtcigw.png)
-
 * 第二引数にタスクの番号を指定すると、その番号のタスクがあるかチェックしたあと、その番号のタスクを削除します。
 * 第二引数に`all`オプションを指定すると、現在存在している全てのタスクを削除するモードに入ります。
 * このモードを使うときは十分気をつけてください。
 * 注意 : **このモードを使用した後のトラブルについては一切責任を負えません。**
 
+
+# Installation
+
+    $ git clone git://github.com/alice1017/console-task-checker.git
+	$ cd console-task-checker
+	$ python setup.py build install
 
 
 
