@@ -117,6 +117,10 @@ def update_task(arguments):
 
 	elif len(arguments) == 3:
 		task_number, dateformat, task_contents = arguments
+		if int(task_number) > task_container.length-1:
+			print "%s or more tasks do not have." % task_number
+			kill(1)
+
 		datetime_object = lib.format_convert(dateformat)
 		sha1_hash = task_container.keys()[int(task_number)]
 		print sha1_hash
