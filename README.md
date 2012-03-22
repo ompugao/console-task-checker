@@ -74,6 +74,10 @@ MIT License
 - - - 
 
 # Change Log
+### Version 0.2.3
+1. update オプションを追加
+2. deleteオプションにall-deleteモードを追加
+
 ### Version 0.2.2
 1. CRUD理論に則りオプション名を改変しました。
 2. タスクを削除する機能を作製
