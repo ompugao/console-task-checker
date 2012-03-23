@@ -4,10 +4,13 @@
 if [ -d "bin" ]; then
 	cp task.py bin/task
 	chmod +x ./bin/task
+
 else
 	mkdir bin
 	cp task.py bin/task
 	chmod +x ./bin/task
+
+fi
 
 git add bin/task
 	
