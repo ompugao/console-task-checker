@@ -37,6 +37,10 @@ class TaskContainer(dict):
 def help_msg():
 	print "ConsoleTaskChecker Version %s" % app_version
 	print "$ task [option] [Args]"
+	print "  help"
+	print "     Show this help msg."
+	print "  version"
+	print "     Show this application's version"
 	print "  create [date] [task contents]"
 	print "      Add new task. Please input date format to second argument, and task contents to thirt argument."
 	print "      Date Format : YYYY/MM/DD"
@@ -54,6 +58,9 @@ def help_msg():
 	print "      Delete Task."
 	print "      If you run delete option without argument, This application provide task number to you."
 	print "      And you input delete option with task number to second argument. Then, this application delete task."  
+
+def show_version():
+	print "ConsoleTaskChecker Version %s" % app_version 
 	
 def raise_not_along_format_error(dateformat):
 	print "'%s' is not along the format." % dateformat
