@@ -1,4 +1,4 @@
-Task Checker on Console Ver 0.2.3
+Task Checker on Console Ver 0.2.4
 ---
 
 # このアプリケーションについて
