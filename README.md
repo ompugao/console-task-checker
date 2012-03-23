@@ -12,6 +12,8 @@ Task Checker on Console Ver 0.2.4
 2. list [[日付のフォーマット]..]
 3. update [[タスクの番号], [日付フォーマット], [タスクの中身]]
 4. delete [[タスクの番号] or [all]..]
+5. help
+6. version
 
 (※)Version 0.2.2にてオプション名の改変を行いました。  
 
@@ -58,6 +60,12 @@ Task Checker on Console Ver 0.2.4
 * このモードを使うときは十分気をつけてください。
 * 注意 : **このモードを使用した後のトラブルについては一切責任を負えません。**
 
+## help
+* ヘルプメッセージを表示
+
+## version
+* アプリケーションのバージョンを表示
+
 
 # Installation
 
@@ -74,6 +82,10 @@ MIT License
 - - - 
 
 # Change Log
+### version 0.2.4
+1. アプリケーションを起動した時に、何も引数がない場合はlistモードを起動するようにした。
+2. help, versionと２つのオプションを追加。
+
 ### Version 0.2.3
 1. update オプションを追加
 2. deleteオプションにall-deleteモードを追加
