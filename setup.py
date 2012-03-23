@@ -5,13 +5,6 @@ from distutils.core import setup
 from lib            import app_version
 import os
 
-if os.path.isdir("bin") == False:
-	os.mkdir("bin")
-
-open("./bin/task", "w").write(open("task.py").read())
-os.system("chmod +x ./bin/task")
-
-
 DISTUTILS_DEBUG = True
 
 setup(
