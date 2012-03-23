@@ -214,7 +214,7 @@ def get_sorted_items(task_container, dateformat=None):
 		elif days_until_the_deadline <= 7:
 			colorcode = "cyan"
 		elif days_until_the_deadline <= 31:
-			colorcode = "green"
+			colorcode = "blue"
 		
 		if days_until_the_deadline in task_contents_list.keys():
 			task_contents_list[days_until_the_deadline].append((
