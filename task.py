@@ -148,20 +148,21 @@ if __name__ == "__main__":
 		args = sys.argv[2:]
 
 	except:
-		lib.help_msg()
+		# 引数が何も無い場合はlistモードを起動
+		show_tasks_list([])
 		kill(1)
 
-	if option == "create":
-		create_task(args)
-		
-	elif option == "list":
-		show_tasks_list(args)
-	
-	elif option == "update":
-		update_task(args)
+	options = {
+		"create" : create_task,
+		"list"   : show_tasks_list,
+		"update" : update_task,
+		"delete" : delete_task,
+		"help"   : lib.help_msg,
+		"version": lib.show_version,
+	}
 
-	elif option == "delete":
-		delete_task(args)
-
-	else:
-		lib.help_msg()
+	for option_name, func in options.iteritems():
+		if (option == option_name and (func.__name__ == "help_msg" or func.__name__ == "show_version")):
+			func()
+		elif option == option_name:
+			func(args)
