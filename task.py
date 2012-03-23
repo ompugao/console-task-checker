@@ -73,7 +73,6 @@ def delete_task(arguments):
 			check = raw_input("Are you sure to delete all task? (y/n) > ")
 			if check == "y" or check == "yes":
 				# delete all task
-
 				lib.delete_all_tasks()
 				print "Delete All Tasks."
 				kill(1)
