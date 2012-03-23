@@ -35,7 +35,7 @@ Task Checker on Console Ver 0.2.5
 * 期限が0以下（つまり期限がきれている)場合は`Yellow`
 * 期限が3日以内の場合は`Magenta`
 * 期限が一週間以内の場合は `Cyan`
-* 期限が一ヶ月以内の場合は`Green`
+* 期限が一ヶ月以内の場合は`Blue`
 * 上記以外は全て`White`
 
 
@@ -82,6 +82,10 @@ MIT License
 - - - 
 
 # Change Log
+### version 0.2.5
+1. 色の配色を変更
+2. `Green` -> `Blue`
+
 ### version 0.2.4
 1. アプリケーションを起動した時に、何も引数がない場合はlistモードを起動するようにした。
 2. help, versionと２つのオプションを追加。
