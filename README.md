@@ -83,7 +83,7 @@ MIT License
 
 # Change Log
 ### version 0.2.5
-1. 色の配色を変更
+1. 色の配色を変更.
 2. `Green` -> `Blue`
 
 ### version 0.2.4
