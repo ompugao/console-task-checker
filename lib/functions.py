@@ -94,7 +94,11 @@ def check_format(dateformat):
 		return dateformat
 
 def format_convert(dateformat):
-	dateformat = check_format(dateformat)
+	if dateformat == "today":
+		dateformat = datetime.datetime.today().strftime("%Y/%m/%d")
+	else:
+		dateformat = check_format(dateformat)
+
 	clip = dateformat.split("/")
 	try:
 		year, month, day = [int(i) for i in clip]
