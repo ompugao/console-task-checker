@@ -68,7 +68,7 @@ def delete_task(arguments):
 		lib.show_tasks_number(task_container)
 		
 
-	elif len(arguments) == 1:
+	elif len(arguments) >= 1:
 		if arguments[0] == "all":
 			check = raw_input("Are you sure to delete all task? (y/n) > ")
 			if check == "y" or check == "yes":
@@ -86,25 +86,34 @@ def delete_task(arguments):
 				print "Please input 'y' or 'n'."
 				kill(1)
 
-		try:
-			task_number = int(arguments[0])
-		except ValueError:
-			print "'%s' is not integer." % arguments[0]
+		task_numbers = []
+		for argument in arguments:
+			try:
+				task_numbers.append(int(argument))
+			except ValueError:
+				print "'%s' is not integer." % arguments[0]
+				kill(1)
 
-		if task_number > task_container.length-1:
-			print "%s or more tasks do not have." % task_number
-			kill(1)
-		
-		delete = task_container.delete_task(task_container.keys()[task_number])
-		lib.serialize_object(task_container)
-		
-		print "Deleted Task :"
-		print "%s : %s" % (delete[0].strftime("%Y/%m/%d"), delete[1])
 
-	elif len(arguments) > 1:
-		print "arguments is too many."
-		lib.help_msg()
-		kill(1)
+		counter = 0
+		for task_number in task_numbers:
+			if task_number > task_container.length-1:
+				print "%s or more tasks do not have." % task_number
+				kill(1)
+			
+			delete = task_container.delete_task(task_container.keys()[task_number])
+			lib.serialize_object(task_container)
+			
+			print "Deleted Task :"
+			print "%s : %s" % (delete[0].strftime("%Y/%m/%d"), delete[1])
+
+			try:
+				task_numbers[counter+1] -= 1
+			except:
+				pass
+			
+			counter += 1
+
 
 
 def update_task(arguments):
