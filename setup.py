@@ -17,6 +17,7 @@ setup(
 	download_url = "",
 	description = "this application support management your task on console.",
 	py_modules = ['task', 'lib.functions', 'setup'],
+	install_requires = ['termcolor'],
 	packages = ['lib'],
 	scripts = ['bin/task']
 )
